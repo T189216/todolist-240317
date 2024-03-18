@@ -14,6 +14,8 @@
     <ul>
         <li th:each="todo : ${todos}">
             <span th:text="${todo.content}"></span>
+            <span th:text="${todo.createdAt}"></span>
+            <span th:text="${todo.modifiedAt}"></span>
         </li>
     </ul>
 </div>
