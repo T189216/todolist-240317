@@ -9,6 +9,7 @@ import lombok.*;
 @NoArgsConstructor
 @Getter
 @Setter
+@Builder
 public class Todo {
 
     @Id
@@ -16,5 +17,5 @@ public class Todo {
     public Long id;
 
     @NonNull
-    public String todo;
+    public String content;
 }
