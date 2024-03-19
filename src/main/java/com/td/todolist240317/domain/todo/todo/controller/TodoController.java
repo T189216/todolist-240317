@@ -29,8 +29,7 @@ public class TodoController {
     @PostMapping("/addTodo")
 //    @PreAuthorize("isAuthenticated()")
     public String addTodo(@ModelAttribute TodoDto.Request request) {
-        // TodoDto.Request 객체를 통해 할 일을 추가하고 추가된 할 일의 ID를 받아옴
-        Long todoId = todoService.addTodo(request);
+        todoService.addTodo(request);
 
         return "redirect:/";
     }

@@ -20,12 +20,13 @@ public class TodoDto {
         private int priority;
         private LocalDate deadline;
 
+        // 필드의 기본값 설정
         @Builder
-        public Request(String content, boolean isCompleted, int priority, LocalDate deadline) {
+        public Request(String content, Boolean isCompleted, Integer priority, LocalDate deadline) {
             this.content = content;
-            this.isCompleted = isCompleted;
-            this.priority = priority;
-            this.deadline = deadline;
+            this.isCompleted = (isCompleted != null) ? isCompleted : false;
+            this.priority = (priority != null) ? priority : 0;
+            this.deadline = (deadline != null) ? deadline : LocalDate.now().plusDays(7);
         }
 
         // DB에 저장하기 위한 DTO -> Entity 변환 메소드

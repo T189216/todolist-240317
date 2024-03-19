@@ -2,6 +2,7 @@ package com.td.todolist240317.domain.todo.todo.entity;
 
 import com.td.todolist240317.global.jpa.BaseEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
 import lombok.*;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class Todo extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @NotBlank
     private String content;
 
     @Column(nullable = false)

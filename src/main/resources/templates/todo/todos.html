@@ -1,18 +1,28 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <script src="../../static/script.js"></script>
-    <link rel="stylesheet" href="styles.css">
     <title>Planify</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="styles.css">
 </head>
 <body>
 <div class="container">
-    <h1>Planify</h1>
-    <form method="post" action="/addTodo">
-        <input type="text" name="todo" placeholder="오늘 할 일을 등록해주세요!" onclick="clearPlaceholder(this)" />
-        <input type="submit" value="등록" />
+
+    <!-- Header -->
+    <header>
+        <h1>Planify</h1>
+        <p>간편하게 할 일을 관리해보세요!</p>
+    </header>
+
+    <!-- addTodo Form -->
+    <form th:action="@{/addTodo}" th:object="${todos}" method="post">
+        <div>
+            <textarea type="text" placeholder="오늘 할 일을 등록해주세요!" onclick="clearPlaceholder(this)"></textarea>
+        </div>
+        <button type="submit">등록</button>
     </form>
-    <hr>
+
+    <!-- todoList -->
     <ul>
         <li th:each="todo : ${todos}">
             <span th:text="${todo.content}"></span>
@@ -24,5 +34,8 @@
         </li>
     </ul>
 </div>
+
+    <!-- Scripts -->
+    <script src="../../static/script.js"></script>
 </body>
 </html>
