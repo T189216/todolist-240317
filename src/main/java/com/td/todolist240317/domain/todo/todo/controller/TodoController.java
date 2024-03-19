@@ -26,7 +26,7 @@ public class TodoController {
         List<TodoDto.Response> todos = todoService.findAllTodos();
         log.info("todos count = {}", todos.size());
         model.addAttribute("todos", todos);
-        return "todos";
+        return "todo/todos";
     }
 
     @PostMapping("/addTodo")
