@@ -1,4 +1,5 @@
-<html lang="ko">
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
 <head>
     <script src="../static/script.js"></script>
     <link rel="stylesheet" href="styles.css">
@@ -14,8 +15,11 @@
     <ul>
         <li th:each="todo : ${todos}">
             <span th:text="${todo.content}"></span>
+            <span th:text="${todo.isCompleted}"></span>
+            <span th:text="${todo.priority}"></span>
+            <span th:text="${todo.deadline}"></span>
             <span th:text="${todo.createdAt}"></span>
-            <span th:text="${todo.modifiedAt}"></span>
+            <span th:text="${todo.updatedAt}"></span>
         </li>
     </ul>
 </div>
