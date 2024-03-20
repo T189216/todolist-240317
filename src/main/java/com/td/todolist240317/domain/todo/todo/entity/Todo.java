@@ -2,33 +2,42 @@ package com.td.todolist240317.domain.todo.todo.entity;
 
 import com.td.todolist240317.global.jpa.BaseEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.NotBlank;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.time.LocalDate;
 
 import static lombok.AccessLevel.PROTECTED;
 
-@Entity(name = "Todo")
-@Table(name = "todo")
+@Entity
 @NoArgsConstructor(access = PROTECTED)
 @AllArgsConstructor(access = PROTECTED)
-@Builder
 @Getter
 @Setter
 public class Todo extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "todo_id")
     private Long id;
 
-    @NotBlank
     private String content;
 
-    @Column(nullable = false)
-    private boolean isCompleted;
-
-    private int priority;
+    private Boolean isCompleted = false;
 
     private LocalDate deadline;
+
+    public static Todo addTodo(String content, LocalDate deadline) {
+        Todo todo = new Todo();
+        todo.content = content;
+        todo.deadline = deadline;
+
+        return todo;
+    }
+
+    public void changeStatus() {
+        this.isCompleted = !this.isCompleted;
+    }
 }
