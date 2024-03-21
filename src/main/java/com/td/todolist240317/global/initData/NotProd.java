@@ -3,6 +3,7 @@ package com.td.todolist240317.global.initData;
 import com.td.todolist240317.domain.todo.todo.entity.Todo;
 import com.td.todolist240317.domain.todo.todo.entity.TodoPriority;
 import com.td.todolist240317.domain.todo.todo.entity.TodoStatus;
+import com.td.todolist240317.domain.todo.todo.service.HashtagService;
 import com.td.todolist240317.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class NotProd {
     private final TodoService todoService;
+    private final HashtagService hashtagService;
 
     @Bean
     @Order(2)
@@ -45,6 +47,9 @@ public class NotProd {
             t3.setPriority(TodoPriority.높음);
             t3.setStatus(TodoStatus.진행중);
             todoService.save(t3);
+
+            String hashtagStr = "#쇼핑 #의류 #가전";
+            hashtagService.addHashtags(t3, hashtagStr);
         };
     }
 }
