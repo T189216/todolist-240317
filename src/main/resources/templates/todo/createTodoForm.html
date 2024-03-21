@@ -21,7 +21,9 @@
 
         <div class="form-group">
             <label th:for="deadline">마감일</label>
-            <input type="date" th:field="*{deadline}" class="form-control" placeholder="마감일을 선택하세요">
+            <input type="date" th:field="*{deadline}" class="form-control" placeholder="마감일을 선택하세요"
+                   th:class="${#fields.hasErrors('deadline')}? 'form-control fieldError' : 'form-control'">
+            <p th:if="${#fields.hasErrors('deadline')}" th:errors="*{deadline}">Incorrect date</p>
         </div>
 
         <div class="form-group">
@@ -31,6 +33,51 @@
                         th:value="${priority}" th:text="${priority}" />
             </select>
         </div>
+
+        <div class="form-group">
+            <label th:for="hashtag">해시태그</label>
+            <input type="text" id="hashtagInput" class="form-control" placeholder="태그를 추가해보세요." onkeypress="handleKeyPress(event)">
+            <div class="tag-container" id="tagContainer"></div>
+        </div>
+
+        <script>
+            // 해시태그 입력 관련 스크립트
+            const hashtagInput = document.getElementById('hashtagInput');
+            const tagContainer = document.getElementById('tagContainer');
+            const tags = [];
+
+            function handleKeyPress(event) {
+                if (event.key === 'Enter' && hashtagInput.value.trim() !== '') {
+                    addTag(hashtagInput.value.trim());
+                    hashtagInput.value = '';
+                }
+            }
+
+            function addTag(tagText) {
+                if (!tags.includes(tagText)) {
+                    tags.push(tagText);
+                    renderTags();
+                }
+            }
+
+            function removeTag(index) {
+                tags.splice(index, 1);
+                renderTags();
+            }
+
+            function renderTags() {
+                tagContainer.innerHTML = '';
+                tags.forEach((tag, index) => {
+                    const tagElement = document.createElement('div');
+                    tagElement.classList.add('tag');
+                    tagElement.innerHTML = `
+                <span class="tag-text">#${tag}</span>
+                <span class="tag-delete" onclick="removeTag(${index})">x</span>
+            `;
+                    tagContainer.appendChild(tagElement);
+                });
+            }
+        </script>
 
         <button type="submit" class="btn btn-primary">등록</button>
     </form>
