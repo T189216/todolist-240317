@@ -24,10 +24,60 @@
                         th:value="${priority}" th:text="${priority}" />
             </select>
         </div>
+
+        <div class="form-group">
+            <label th:for="hashtag">해시태그</label>
+            <div class="tag-container">
+                <!-- 기존 해시태그를 표시 -->
+                <span th:each="tag : ${form.hashtags}" class="tag">
+                    <span class="tag-text">#<span th:text="${tag}" /></span>
+                    <span class="tag-delete" onclick="removeTag(this)">x</span>
+                </span>
+            </div>
+            <input type="text" id="hashtagInput" class="form-control" placeholder="태그를 추가해보세요." onkeypress="handleKeyPress(event)">
+        </div>
+
         <button type="submit" class="btn btn-primary">수정</button>
         <a th:href="@{'/todo/list'}" class="btn btn-secondary">취소</a>
     </form>
 </div>
+
+<script>
+    // 해시태그 입력 관련 스크립트
+    const hashtagInput = document.getElementById('hashtagInput');
+    const tagContainer = document.querySelector('.tag-container');
+
+    // 이전에 저장된 해시태그들을 태그 컨테이너에 추가
+    const existingTags = document.getElementById('tagList').value.split(',');
+    existingTags.forEach(tag => {
+        addTag(tag);
+    });
+
+    // 새로운 해시태그를 추가하는 함수
+    function handleKeyPress(event) {
+        if (event.key === 'Enter' && hashtagInput.value.trim() !== '') {
+            event.preventDefault(); // 엔터 키 기본 동작 방지
+            addTag(hashtagInput.value.trim());
+            hashtagInput.value = '';
+        }
+    }
+
+    // 새로운 해시태그를 추가하여 표시하는 함수
+    function addTag(tagText) {
+        const tagElement = document.createElement('span');
+        tagElement.classList.add('tag');
+        tagElement.innerHTML = `
+            <span class="tag-text">#${tagText}</span>
+            <span class="tag-delete" onclick="removeTag(this)">x</span>
+        `;
+        tagContainer.appendChild(tagElement);
+    }
+
+    // 이전에 저장된 해시태그를 삭제하는 함수
+    function removeTag(tagElement) {
+        tagElement.parentElement.remove();
+    }
+</script>
 
 </body>
 </html>

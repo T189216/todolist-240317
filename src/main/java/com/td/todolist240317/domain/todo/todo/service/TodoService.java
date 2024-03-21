@@ -31,7 +31,7 @@ public class TodoService {
     }
 
     @Transactional
-    public Optional<Todo> findById(Long todoId) {
+    public Optional<Todo> findByTodoId(Long todoId) {
         return todoRepository.findById(todoId);
     }
 

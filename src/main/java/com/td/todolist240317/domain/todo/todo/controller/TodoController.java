@@ -2,6 +2,7 @@ package com.td.todolist240317.domain.todo.todo.controller;
 
 import com.td.todolist240317.domain.todo.todo.entity.Todo;
 import com.td.todolist240317.domain.todo.todo.entity.TodoStatus;
+import com.td.todolist240317.domain.todo.todo.service.HashtagService;
 import com.td.todolist240317.domain.todo.todo.service.TodoService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,6 +21,7 @@ import java.util.Optional;
 public class TodoController {
 
     private final TodoService todoService;
+    private final HashtagService hashtagService;
 
     @GetMapping("/add")
     public String addForm(Model model) {
@@ -37,6 +39,9 @@ public class TodoController {
         // 날짜를 문자열로 변환하여 설정
         form.setDeadline(form.getDeadline().toString());
 
+        // 태그 분리
+        String hashtagStr = form.getTag();
+
         Todo todo = new Todo();
         todo.setContent(form.getContent());
         todo.setDeadline(LocalDate.parse(form.getDeadline())); // 문자열을 다시 LocalDate로 변환하여 설정
@@ -44,6 +49,7 @@ public class TodoController {
         todo.setStatus(TodoStatus.진행중);
 
         todoService.save(todo);
+        hashtagService.addHashtags(todo, hashtagStr);
         return "redirect:/";
     }
 
@@ -57,7 +63,7 @@ public class TodoController {
 
     @GetMapping("/{todoId}/update")
     public String updateTodoForm(@PathVariable("todoId") Long todoId, Model model) {
-        Optional<Todo> getTodo = todoService.findById(todoId);
+        Optional<Todo> getTodo = todoService.findByTodoId(todoId);
         TodoForm form = new TodoForm();
 
         if (getTodo.isPresent()) {

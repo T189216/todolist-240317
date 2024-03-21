@@ -3,15 +3,15 @@ package com.td.todolist240317.domain.todo.todo.entity;
 import com.td.todolist240317.global.jpa.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 @Entity
 @Getter
 @Setter
+@NoArgsConstructor
 public class Todo extends BaseEntity {
 
     @Id
@@ -28,7 +28,4 @@ public class Todo extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private TodoStatus status; // 완료 상태 [PROGRESS, DONE]
-
-    @ManyToMany(mappedBy = "todos", cascade = CascadeType.ALL) // ?
-    private List<Category> categories = new ArrayList<>();
 }

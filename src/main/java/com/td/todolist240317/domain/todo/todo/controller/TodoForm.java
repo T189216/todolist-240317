@@ -15,4 +15,6 @@ public class TodoForm {
     private String deadline;
 
     private TodoPriority priority; // 우선순위 [높음, 중간, 낮음]
+
+    private String tag;
 }
