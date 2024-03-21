@@ -1,6 +1,8 @@
 package com.td.todolist240317.global.initData;
 
 import com.td.todolist240317.domain.todo.todo.entity.Todo;
+import com.td.todolist240317.domain.todo.todo.entity.TodoPriority;
+import com.td.todolist240317.domain.todo.todo.entity.TodoStatus;
 import com.td.todolist240317.domain.todo.todo.service.TodoService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,13 +25,26 @@ public class NotProd {
     @Order(2)
     public ApplicationRunner initNotProd() {
         return args -> {
-            Todo todo1 = Todo.addTodo("장보기", LocalDate.now().plusDays(3));
-            Todo todo2 = Todo.addTodo("병원 예약", LocalDate.now().plusDays(5));
-            Todo todo3 = Todo.addTodo("여행 계획", LocalDate.now().plusDays(10));
+            Todo t1 = new Todo();
+            t1.setContent("장보기~");
+            t1.setDeadline(LocalDate.now().plusDays(2));
+            t1.setPriority(TodoPriority.낮음);
+            t1.setStatus(TodoStatus.진행중);
+            todoService.save(t1);
 
-            todoService.save(todo1);
-            todoService.save(todo2);
-            todoService.save(todo3);
+            Todo t2 = new Todo();
+            t2.setContent("병원 예약");
+            t2.setDeadline(LocalDate.now().plusDays(7));
+            t2.setPriority(TodoPriority.중간);
+            t2.setStatus(TodoStatus.완료);
+            todoService.save(t2);
+
+            Todo t3 = new Todo();
+            t3.setContent("레포트 제출");
+            t3.setDeadline(LocalDate.now().plusDays(10));
+            t3.setPriority(TodoPriority.높음);
+            t3.setStatus(TodoStatus.진행중);
+            todoService.save(t3);
         };
     }
 }
